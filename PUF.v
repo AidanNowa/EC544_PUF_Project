@@ -20,21 +20,40 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module PUF(response, signal, challenge);
+module PUF(response, signal, challenge, clk);
 
     parameter n = 128;
     
-    input signal;
+    input signal, clk;
     input [n-1:0] challenge;
-    input [n-1:0] response;
+    output [n-1:0] response;
     
-    genvar i;
+    wire [n-1:0]arbiter_out;
+    reg [n-1:0] key;
+    reg test;
     
-    generate
+    wire [n-1:0] response_temp;
+    //genvar i;
+    
+   // generate
+   // for(i = 0; i < n; i = i + 1) begin 
+//        arbiter Ar1bit (signal, signal, challenge, arbiter_out[i]);
+//        always @ (posedge clk) begin
+//            key[i] <= arbiter_out[i];
+//        end //always  
+        //dff DFF (response[i], arbiter_out, clk);
+   // end//for
+   genvar i;
     for(i = 0; i < n; i = i + 1) begin
-        arbiter Ar1bit(signal, signal, challenge, response[i]);
-    end
-    endgenerate
+        arbiter Ar1bit (signal, signal, challenge, response_temp[i]);
+        assign response[i] = response_temp[i];   
+    end//for
+    //assign response = key;
+    
+   // endgenerate
+    
+    
+    
     
 
 endmodule
