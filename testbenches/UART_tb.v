@@ -60,24 +60,17 @@ module UART_tb;
     
     
     initial begin
-    $display("here start");
         //tell UART to send command through TXD
-        //@(posedge clk);
         @(posedge clk);
-     $display("here 5");
             tx_DV <= 1'b1;
             tx_Byte <= 8'hAB;
         @(posedge clk);
-        $display("here 2");
             tx_DV <= 1'b1;
         @(posedge tx_Done);
-         $display("here 1");
         //Send command to UART through RXD
         @(posedge clk);
-         $display("here 3");
             UART_Write_Byte(8'h3F);
         @(posedge clk);
-         $display("here 4");
         //check for correctness
         if(rx_Byte == 8'h3F)
             $display("Correct Byte Received");
