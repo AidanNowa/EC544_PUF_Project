@@ -40,6 +40,7 @@ module arbiter(in0, in1, control, out, out_inv);
     end
     endgenerate
     
-    SR_latch SRL(out, out_inv, wire0[n-1], wire1[n-1]);
+    //SR_latch SRL(out, out_inv, wire0[n-1], wire1[n-1]);
+    dff DFF (out, wire0[n-1], wire1[n-1]);
     
 endmodule
